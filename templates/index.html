@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<a href="{{url_for('login')}}">Login</a>
+<a href="{{url_for('register')}}">Register</a>
+
+
+	<script>
+		const Http = new XMLHttpRequest();
+		const url='https://poetrydb.org/random';
+		Http.open("GET", url);
+		Http.send();
+
+		Http.onreadystatechange = (e) => {
+			document.getElementById("poem").innerHTML = Http.responseText;
+		}
+	</script>
+	<h1 id="poem"></h1>
+
+{% endblock %}
