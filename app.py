@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, session
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+import urllib.request, json
 
 # import sqlite3
 
@@ -62,7 +63,12 @@ def index():
 	
 @app.route("/poems")
 def poems():
-	return render_template("poems.html")
+	# url = "https://poetrydb.org/titles"
+	response = urllib.request.urlopen("https://poetrydb.org/titles")
+	data = response.read()
+	print(data)
+	dict = json.loads(data)
+	return render_template("poems.html", poems=dict["titles"])
 	
 @app.route("/authors")
 def authors():
@@ -82,7 +88,8 @@ def login():
 @app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-	return render_template("dashboard.html")
+	user_id = session["user_id"]
+	return render_template("dashboard.html", variable=user_id)
 
 @app.route("/logout", methods=['GET', 'POST'])
 @login_required
