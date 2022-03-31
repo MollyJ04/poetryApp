@@ -6,7 +6,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-import urllib.request, json
+import urllib3
+import json
+# import requests
 
 # import sqlite3
 
@@ -59,16 +61,26 @@ nav.Bar('top', [
 
 @app.route("/")
 def index():
+	# req = requests.get("https://poetrydb.org/random")
+	# data = req.content
+	# url = "https://poetrydb.org/random"
+	# # response = urllib.request.urlopen(url)
+	# # data = response.read()
+	# # dict = json.loads(data)
+	# response = urllib3.request("GET", url)
+	# data = response.json()
+	# return render_template("index.html",poems=data["lines"])
 	return render_template("index.html")
 	
 @app.route("/poems")
 def poems():
 	# url = "https://poetrydb.org/titles"
-	response = urllib.request.urlopen("https://poetrydb.org/titles")
-	data = response.read()
-	print(data)
-	dict = json.loads(data)
-	return render_template("poems.html", poems=dict["titles"])
+	# response = urllib.request.urlopen("https://poetrydb.org/titles")
+	# data = response.read()
+	# print(data)
+	# dict = json.loads(data)
+	# return render_template("poems.html", poems=dict["titles"])
+	return render_template("poems.html")
 	
 @app.route("/authors")
 def authors():

@@ -6,7 +6,7 @@
 <a href="{{url_for('register')}}">Register</a>
 
 
-	<script>
+	<!-- <script>
 		const Http = new XMLHttpRequest();
 		const url='https://poetrydb.org/random';
 		Http.open("GET", url);
@@ -15,7 +15,10 @@
 		Http.onreadystatechange = (e) => {
 			document.getElementById("poem").innerHTML = Http.responseText;
 		}
-	</script>
+	</script> -->
 	<h1 id="poem"></h1>
+	{% for poem in poems %}
+
+	{% endfor %}
 
 {% endblock %}
