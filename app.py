@@ -67,13 +67,16 @@ def index():
 	title = response[0]["title"]
 	author = response[0]["author"]
 	poem = response[0]["lines"]
-	return render_template("index.html",title=title,author=author,poem=poem)
+	return render_template("index.html",title=title,author=author,poem=poem, user=user)
 	
 @app.route("/poems")
 def poems():
 	response = requests.get("https://poetrydb.org/title")
 	response = response.json()
 	poems = response["titles"]
+	titles = []
+	for i in poems:
+		titles.append()
 	return render_template("poems.html", poems=poems)
 	
 @app.route("/authors")
