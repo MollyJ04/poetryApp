@@ -2,9 +2,10 @@
 
 {% block body %}
 
-	hello, poetry!
-	{% for movie in movies %}
-
-	{% endfor %}
+	hello, poetry!<br>
+	{% for poem in poems %}
+		<!--this doesn't work yet, need to get it to get rid of quotes and spaces and such for url-->
+		<a href="https://poetrydb.org/title/{{ poem }}">{{ poem }}</a><br>
+	{% endfor %}	
 
 {% endblock %}
