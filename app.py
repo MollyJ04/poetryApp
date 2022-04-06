@@ -103,13 +103,15 @@ def login():
 			if bcrypt.check_password_hash(user.password, form.password.data):
 				login_user(user)
 				return redirect(url_for('dashboard'))
+				# return redirect(url_for('dashboard',username=form.username.data))
 	return render_template("login.html", form=form)
 
 @app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
-	user_id = session["user_id"]
-	return render_template("dashboard.html", variable=user_id)
+	# user_id = session["user_id"]
+	# return render_template("dashboard.html", variable=user_id)
+	return render_template("dashboard.html")
 
 @app.route("/logout", methods=['GET', 'POST'])
 @login_required

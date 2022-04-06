@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+  <a href="{{url_for('poems')}}">Back to poems</a>
     <h2>{{title}}</h2><br>
     {% for line in poem %}
 		<p>{{ line }}</p><br>

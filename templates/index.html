@@ -2,15 +2,22 @@
 
 {% block body %}
 
-<a href="{{url_for('login')}}">Login</a>
-<a href="{{url_for('register')}}">Register</a>
-<p>You're logged in as {{ user }}</p>
+<p>You're logged in as {{ current_user.username }}</p>
+{% if current_user.is_authenticated %}
+	Hi {{ current_user.username }}!
+	<a href="{{url_for('dashboard')}}">Dashboard</a>
+{% else %}
+	<a href="{{url_for('login')}}">Login</a>
+	<a href="{{url_for('register')}}">Register</a>
+{% endif %}
 
-	{{ random }}
-	<h1>{{title}}</h1>
+	<!-- {{ random }} -->
+	<h1>
+		<a href="{{url_for('read',title=title)}}">{{title}}</a>
+	</h1>
 	<h2>by {{author}}</h2>
 	{% for line in poem %}
-		<p>{{ line }}</p><br>
+		<p>{{line}}</p><br>
 	{% endfor %}
 
 {% endblock %}
