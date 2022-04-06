@@ -67,7 +67,7 @@ def index():
 	title = response[0]["title"]
 	author = response[0]["author"]
 	poem = response[0]["lines"]
-	return render_template("index.html",title=title,author=author,poem=poem, user=user)
+	return render_template("index.html",title=title,author=author,poem=poem)
 	
 @app.route("/poems")
 def poems():
@@ -76,12 +76,23 @@ def poems():
 	poems = response["titles"]
 	titles = []
 	for i in poems:
-		titles.append()
+		newTitle = re.sub(r'\W+', ' ', i)
+		titles.append(newTitle.strip())
 	return render_template("poems.html", poems=poems)
 	
 @app.route("/authors")
 def authors():
 	return render_template("authors.html")
+
+@app.route("/read/<title>")
+def read(title):
+	response = requests.get(f"https://poetrydb.org/title/{title}")
+	response = response.json()
+	# slight problem of that if there are multiple poems with the same name
+	# this only takes first one
+	# but we'll cross that bridge when we get there :)
+	poem = response[0]["lines"]
+	return render_template("read.html",title=title,poem=poem)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():

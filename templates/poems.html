@@ -3,9 +3,13 @@
 {% block body %}
 
 	hello, poetry!<br>
+	<h1>
+		<a href="{{url_for('read',title='sample')}}">testing this</a><br>
+	</h1>
 	{% for poem in poems %}
 		<!--this doesn't work yet, need to get it to get rid of quotes and spaces and such for url-->
-		<a href="https://poetrydb.org/title/{{ poem }}">{{ poem }}</a><br>
-	{% endfor %}	
+		<!-- <a href="https://poetrydb.org/title">{{ poem }}</a><br> -->
+		<a href="{{url_for('read',title=poem)}}">{{poem}}</a><br>
+	{% endfor %}
 
 {% endblock %}
