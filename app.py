@@ -74,15 +74,14 @@ def poems():
 	response = requests.get("https://poetrydb.org/title")
 	response = response.json()
 	poems = response["titles"]
-	titles = []
-	for i in poems:
-		newTitle = re.sub(r'\W+', ' ', i)
-		titles.append(newTitle.strip())
 	return render_template("poems.html", poems=poems)
 	
 @app.route("/authors")
 def authors():
-	return render_template("authors.html")
+	response = requests.get("https://poetrydb.org/author")
+	response = response.json()
+	authors = response["authors"]
+	return render_template("authors.html", authors=authors)
 
 @app.route("/read/<title>")
 def read(title):
@@ -92,7 +91,17 @@ def read(title):
 	# this only takes first one
 	# but we'll cross that bridge when we get there :)
 	poem = response[0]["lines"]
-	return render_template("read.html",title=title,poem=poem)
+	author = response[0]["author"]
+	return render_template("read.html",title=title,poem=poem,author=author)
+
+@app.route("/authorPoems/<author>")
+def authorPoems(author):
+	response = requests.get(f"https://poetrydb.org/author/{author}")
+	response = response.json()
+	poems = []
+	for i in response:
+		poems.append(i["title"])
+	return render_template("authorPoems.html",poems=poems)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():

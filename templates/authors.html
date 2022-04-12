@@ -2,6 +2,8 @@
 
 {% block body %}
 
-	hello, authors
+	{% for author in authors %}
+		<a href="{{url_for('authorPoems',author=author)}}">{{author}}</a><br>
+	{% endfor %}
 
 {% endblock %}

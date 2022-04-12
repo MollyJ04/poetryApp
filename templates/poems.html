@@ -2,10 +2,7 @@
 
 {% block body %}
 
-	hello, poetry!<br>
 	{% for poem in poems %}
-		<!--this doesn't work yet, need to get it to get rid of quotes and spaces and such for url-->
-		<!-- <a href="https://poetrydb.org/title">{{ poem }}</a><br> -->
 		<a href="{{url_for('read',title=poem)}}">{{poem}}</a><br>
 	{% endfor %}
 

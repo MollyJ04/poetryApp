@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<a href="{{url_for('authors')}}">Back to authors</a><br>
+
+	{% for poem in poems %}
+        <a href="{{url_for('read',title=poem)}}">{{poem}}</a><br>
+	{% endfor %}
+
+{% endblock %}
