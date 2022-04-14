@@ -85,11 +85,14 @@ def authors():
 
 @app.route("/read/<title>")
 def read(title):
-	response = requests.get(f"https://poetrydb.org/title/{title}")
+	response = requests.get(f"https://poetrydb.org/title/{title}:abs")
 	response = response.json()
 	# slight problem of that if there are multiple poems with the same name
 	# this only takes first one
 	# but we'll cross that bridge when we get there :)
+	# if len(response)>1:
+	# 	for i in response:
+	# 		if i[""]
 	poem = response[0]["lines"]
 	author = response[0]["author"]
 	return render_template("read.html",title=title,poem=poem,author=author)

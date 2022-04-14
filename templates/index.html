@@ -16,7 +16,11 @@
 	</h1>
 	<h2>by {{author}}</h2>
 	{% for line in poem %}
-		<p>{{line}}</p><br>
+      {% if line == '' %}
+        <br>
+      {% else %}
+        <p>{{ line }}</p>
+      {% endif %}
 	{% endfor %}
 
 {% endblock %}
