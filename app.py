@@ -2,6 +2,7 @@ import re
 from flask import Flask, render_template, url_for, redirect, session
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -10,7 +11,6 @@ from flask_bcrypt import Bcrypt
 # import urllib3
 import json
 import requests
-
 # import sqlite3
 
 app = Flask(__name__)
@@ -32,6 +32,14 @@ class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(20), nullable=False, unique=True)
 	password = db.Column(db.String(80), nullable=False)
+	comments = db.relationship('Comment',backref='user',passive_deletes=True)
+
+class Comment(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	text = db.Column(db.Text, nullable=False)
+	date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+	poem = db.Column(db.Text)
+	author = db.Column(db.Integer, db.ForeignKey('user.id',ondelete="CASCADE"), nullable=False)
 
 class RegisterForm(FlaskForm):
 	username = StringField(validators=[InputRequired(), Length(
@@ -143,6 +151,17 @@ def register():
 		return redirect(url_for('login'))
 
 	return render_template("register.html", form=form)
+
+@app.route("/create-comment/<title>", methods=['POST'])
+@login_required
+def create_comment(title):
+	text = request.form.get('text')
+	if not text:
+		flash("Comments can't be empty")
+	else:
+		pass
+	return redirect(url_for('read',title=title))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

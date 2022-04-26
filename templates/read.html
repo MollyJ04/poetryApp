@@ -14,4 +14,10 @@
         <p>{{ line }}</p>
       {% endif %}
 	  {% endfor %}
+
+    <form method="POST" action="/create-comment/{{title}}">
+      <input type="text" id="text" name="text" placeholder="Comment!">
+      <button type="submit">Comment</button>
+
+    </form>
 {% endblock %}
