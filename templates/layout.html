@@ -13,8 +13,8 @@
             {% endfor %}
         </ul>
         {% if current_user.is_authenticated %}
-	        Hi {{ current_user.username }}!
-	        <a href="{{url_for('dashboard')}}">Dashboard</a>
+	        Hi {{ current_user.username }}!<br>
+	        <a href="{{url_for('dashboard')}}">Dashboard</a><br>
         {% else %}
 	        <a href="{{url_for('login')}}">Login</a>
 	        <a href="{{url_for('register')}}">Register</a><br>

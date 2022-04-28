@@ -1,5 +1,5 @@
 import re
-from flask import Flask, render_template, url_for, redirect, session
+from flask import Flask, render_template, url_for, redirect, session, request, flash
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
@@ -103,7 +103,8 @@ def read(title):
 	# 		if i[""]
 	poem = response[0]["lines"]
 	author = response[0]["author"]
-	return render_template("read.html",title=title,poem=poem,author=author)
+	comments = Comment.query.filter_by(poem=title)
+	return render_template("read.html",title=title,poem=poem,author=author,comments=comments)
 
 @app.route("/authorPoems/<author>")
 def authorPoems(author):
@@ -156,10 +157,9 @@ def register():
 @login_required
 def create_comment(title):
 	text = request.form.get('text')
-	if not text:
-		flash("Comments can't be empty")
-	else:
-		pass
+	comment = Comment(text=text,author=current_user.id,poem=title)
+	db.session.add(comment)
+	db.session.commit()
 	return redirect(url_for('read',title=title))
 
 

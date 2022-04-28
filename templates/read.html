@@ -14,10 +14,13 @@
         <p>{{ line }}</p>
       {% endif %}
 	  {% endfor %}
-
+    <h2>Comments</h2>
     <form method="POST" action="/create-comment/{{title}}">
       <input type="text" id="text" name="text" placeholder="Comment!">
       <button type="submit">Comment</button>
-
     </form>
+    {% for comment in comments %}
+      <strong>{{comment.user.username}}:</strong>
+      {{ comment.text }}<br>
+    {% endfor %}
 {% endblock %}
