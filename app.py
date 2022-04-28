@@ -33,12 +33,21 @@ class User(db.Model, UserMixin):
 	username = db.Column(db.String(20), nullable=False, unique=True)
 	password = db.Column(db.String(80), nullable=False)
 	comments = db.relationship('Comment',backref='user',passive_deletes=True)
+	annotations = db.relationship('Annotation',backref='user',passive_deletes=True)
 
 class Comment(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	text = db.Column(db.Text, nullable=False)
 	date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 	poem = db.Column(db.Text)
+	author = db.Column(db.Integer, db.ForeignKey('user.id',ondelete="CASCADE"), nullable=False)
+
+class Annotation(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	text = db.Column(db.Text, nullable=False)
+	date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+	poem = db.Column(db.Text)
+	line = db.Column(db.Integer)
 	author = db.Column(db.Integer, db.ForeignKey('user.id',ondelete="CASCADE"), nullable=False)
 
 class RegisterForm(FlaskForm):

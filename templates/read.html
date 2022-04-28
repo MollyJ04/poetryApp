@@ -2,6 +2,8 @@
 
 {% block body %}
   <a href="{{url_for('poems')}}">Back to poems</a>
+  <div>
+  <div style="width:50%;float:left">
     <h2>{{title}}</h2><br>
     <h3>{{author}}</h3><br>
     <!-- this is getting rid of leading tabs and enters and like formatting stuff like that?
@@ -11,9 +13,15 @@
       {% if line == '' %}
         <br>
       {% else %}
-        <p>{{ line }}</p>
+        <p onclick="alert('it works! :-)')">{{ line }}</p>
       {% endif %}
 	  {% endfor %}
+  </div>
+  <div style="width:50%;float:left">
+    <h1>the annotations should go here</h1>
+
+  </div>
+</div>
     <h2>Comments</h2>
     <form method="POST" action="/create-comment/{{title}}">
       <input type="text" id="text" name="text" placeholder="Comment!">
@@ -22,5 +30,6 @@
     {% for comment in comments %}
       <strong>{{comment.user.username}}:</strong>
       {{ comment.text }}<br>
+      <!-- {{ comment.date_created }}<br> -->
     {% endfor %}
 {% endblock %}
