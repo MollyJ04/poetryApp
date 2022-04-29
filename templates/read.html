@@ -3,24 +3,47 @@
 {% block body %}
   <a href="{{url_for('poems')}}">Back to poems</a>
   <div>
-  <div style="width:50%;float:left">
+  <div>
     <h2>{{title}}</h2><br>
     <h3>{{author}}</h3><br>
     <!-- this is getting rid of leading tabs and enters and like formatting stuff like that?
     so the lines that should be break are just blank and not newlines so that's why it's skipping those
   and then the spaces it strips down to one space regardless of if it's multiple and then doesn't show that anyways -->
-    {% for line in poem %}
+    {% for i in range(length) %}
+      {% if poem[i] == '' %}
+      <br>
+      {% else %}
+        <p id="line{{i}}" style="width:100%;float:left" onclick="showHideAnnotation('{{i}}')">{{ poem[i] }}</p>
+      {% endif %}
+      <!-- <button onclick="showHideAnnotation('{{i}}')">></button> -->
+      <div id="annotation{{i}}" style="width:50%;float:left;display:none">
+        <form method="POST" action="/create-annotation/{{title}}/{{i}}">
+          <input type="text" id="text" name="text" placeholder="What do you think?">
+          <button type="submit">Post</button>
+        </form>
+        {% for annotation in annotations %}
+          {% if annotation.line==i %}
+            <strong>{{annotation.user.username}}:</strong>
+            {{annotation.text}}<br>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <!-- {% for line in poem %}
       {% if line == '' %}
         <br>
       {% else %}
-        <p onclick="alert('it works! :-)')">{{ line }}</p>
+        <p style="width:50%;float:left" onclick="alert('it works! :-)')">{{ line }}</p>
       {% endif %}
-	  {% endfor %}
+      <div style="width:50%;float:left">
+        <p>the annotations should go here</p>
+      </div>
+	  {% endfor %} -->
   </div>
-  <div style="width:50%;float:left">
+  <!-- <div style="width:50%;float:left">
     <h1>the annotations should go here</h1>
 
-  </div>
+  </div> -->
 </div>
     <h2>Comments</h2>
     <form method="POST" action="/create-comment/{{title}}">

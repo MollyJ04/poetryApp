@@ -113,7 +113,8 @@ def read(title):
 	poem = response[0]["lines"]
 	author = response[0]["author"]
 	comments = Comment.query.filter_by(poem=title)
-	return render_template("read.html",title=title,poem=poem,author=author,comments=comments)
+	annotations = Annotation.query.filter_by(poem=title)
+	return render_template("read.html",title=title,poem=poem,author=author,comments=comments,length=len(poem),annotations=annotations)
 
 @app.route("/authorPoems/<author>")
 def authorPoems(author):
@@ -171,6 +172,14 @@ def create_comment(title):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
+@app.route("/create-annotation/<title>/<line>", methods=['POST'])
+@login_required
+def create_annotation(title,line):
+	text = request.form.get('text')
+	annotation = Annotation(text=text,author=current_user.id,poem=title,line=line)
+	db.session.add(annotation)
+	db.session.commit()
+	return redirect(url_for('read',title=title))
 
 if __name__ == '__main__':
     app.run(debug=True)
