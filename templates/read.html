@@ -53,6 +53,16 @@
     {% for comment in comments %}
       <strong>{{comment.user.username}}:</strong>
       {{ comment.text }}<br>
+      {% if current_user.id==comment.author %}
+      <div class="btn-button">
+        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a>
+          </li>
+        </ul>
+      </div>
+      {% endif %}
       <!-- {{ comment.date_created }}<br> -->
     {% endfor %}
 {% endblock %}

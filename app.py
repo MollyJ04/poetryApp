@@ -181,5 +181,10 @@ def create_annotation(title,line):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
+@app.route("/delete-comment/<comment_id>")
+@login_required
+def delete_comment(comment_id):
+	pass
+
 if __name__ == '__main__':
     app.run(debug=True)
