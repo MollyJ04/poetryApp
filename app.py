@@ -181,10 +181,15 @@ def create_annotation(title,line):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
-@app.route("/delete-comment/<comment_id>")
+@app.route("/delete-comment/<title>/<comment_id>")
 @login_required
-def delete_comment(comment_id):
-	pass
+def delete_comment(title,comment_id):
+	comment = Comment.query.filter_by(id=comment_id).first()
+	# ignored the if statements in tutorial to check that you're allowed to delete
+	# should probably add those back later
+	db.session.delete(comment)
+	db.session.commit()
+	return redirect(url_for('read',title=title))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -7,13 +7,37 @@
         <title>hello</title>
     </head>
     <body>
-        <ul>
-            {% for item in nav.top %}
-            <li class="{{ 'active' if item.is_active else '' }}">
-                <a href="{{ item.url }}">{{ item.label }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <!-- <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        WebSiteName</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    {% for item in nav.top %}
+                    <li class="{{ 'active' if item.is_active else '' }}">
+                        <a href="{{ item.url }}">{{ item.label }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav> -->
+        <nav class="navbar navbar-expanded-lg navabar-dark bg-dark">
+            <div class="container-fluid">
+                <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button> -->
+                <div class="collapse navbar-collapse" id="navbar">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="/">Home</a>
+                        <a class="nav-item nav-link" href="/poems">Poems</a>
+
+                    </div>
+                </div>
+            </div> 
+        </nav>
+
         {% if current_user.is_authenticated %}
 	        Hi {{ current_user.username }}!<br>
 	        <a href="{{url_for('dashboard')}}">Dashboard</a><br>
