@@ -191,5 +191,12 @@ def delete_comment(title,comment_id):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
+@app.route("/search")
+def search():
+	term = request.form.get('text')
+	# need to put the sql query and then printing all the results of that
+	pass
+
+
 if __name__ == '__main__':
     app.run(debug=True)
