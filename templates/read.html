@@ -22,10 +22,20 @@
           <button type="submit">Post</button>
         </form>
         {% for annotation in annotations %}
-          {% if annotation.line==i %}
-            <strong>{{annotation.user.username}}:</strong>
-            {{annotation.text}}<br>
-          {% endif %}
+          <div>
+            {% if annotation.line==i %}
+              <strong>{{annotation.user.username}}:</strong>
+              {{annotation.text}}<br>
+            {% endif %}
+          </div>
+          <div>
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+            <ul class="dropdown-menu">
+            <li>
+              <a href="/delete-annotation/{{title}}/{{annotation.id}}" class="dropdown-item">Delete</a>
+            </li>
+            </ul>
+          </div>
         {% endfor %}
       </div>
     {% endfor %}
@@ -51,8 +61,10 @@
       <button type="submit">Comment</button>
     </form>
     {% for comment in comments %}
-      <strong>{{comment.user.username}}:</strong>
-      {{ comment.text }}<br>
+      <div>
+        <strong>{{comment.user.username}}:</strong>
+        {{ comment.text }}
+      </div>
       {% if current_user.id==comment.author %}
       <div class="btn-button">
         <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>

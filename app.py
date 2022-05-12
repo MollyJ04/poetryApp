@@ -191,6 +191,14 @@ def delete_comment(title,comment_id):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
+@app.route("/delete-annotation/<title>/<annotation_id>")
+@login_required
+def delete_annotation(title,annotation_id):
+	annotation = Annotation.query.filter_by(id=annotation_id).first()
+	db.session.delete(annotation)
+	db.session.commit()
+	return redirect(url_for('read',title=title))
+
 @app.route("/search")
 def search():
 	term = request.form.get('text')
