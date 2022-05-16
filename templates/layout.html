@@ -90,10 +90,11 @@
             var line = document.getElementById("line"+num)
             if(annotation.style.display == null || annotation.style.display == "none") {
                 annotation.style.display = "block";
-                line.style.width = "50%"
+                line.style.backgroundColor = "pink";
             } else {
                 annotation.style.display = "none";
-                line.style.width = "100%"
+                // line.style.width = "100%"
+                line.style.backgroundColor = "white";
             }
         }
     </script>

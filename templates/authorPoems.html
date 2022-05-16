@@ -5,7 +5,9 @@
 <a href="{{url_for('authors')}}">Back to authors</a><br>
 
 	{% for poem in poems %}
-        <a href="{{url_for('read',title=poem)}}">{{poem}}</a><br>
+	<div class="card border-dark" style="width:50%">
+		<a href="{{url_for('read',title=poem)}}">{{poem}}</a><br>
+	</div><br>
 	{% endfor %}
 
 {% endblock %}

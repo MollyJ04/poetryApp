@@ -91,6 +91,12 @@ def poems():
 	response = requests.get("https://poetrydb.org/title")
 	response = response.json()
 	poems = response["titles"]
+	# poemAuthors = {}
+	# for i in poems:
+	# 	response = requests.get(f"https://poetrydb.org/title/{i}:abs")
+	# 	response = response.json()
+	# 	author = response[0]["author"]
+	# 	poemAuthors[i] = author
 	return render_template("poems.html", poems=poems)
 	
 @app.route("/authors")

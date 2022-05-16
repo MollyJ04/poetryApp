@@ -4,19 +4,23 @@
   <a href="{{url_for('poems')}}">Back to poems</a>
   <div>
   <div>
-    <h2>{{title}}</h2><br>
-    <h3>{{author}}</h3><br>
+    <h2>{{title}}</h2>
+    <h3><a href="/authorPoems/{{author}}">{{author}}</a></h3><br>
     <!-- this is getting rid of leading tabs and enters and like formatting stuff like that?
     so the lines that should be break are just blank and not newlines so that's why it's skipping those
   and then the spaces it strips down to one space regardless of if it's multiple and then doesn't show that anyways -->
-    {% for i in range(length) %}
+  <div class="container">
+  {% for i in range(length) %}
+  <div class="row">
       {% if poem[i] == '' %}
-      <br>
+      <div class="col"><br></div>
       {% else %}
+      <div class="col">
         <p id="line{{i}}" style="width:100%;float:left" onclick="showHideAnnotation('{{i}}')">{{ poem[i] }}</p>
+      </div>
       {% endif %}
       <!-- <button onclick="showHideAnnotation('{{i}}')">></button> -->
-      <div id="annotation{{i}}" style="width:50%;float:left;display:none">
+      <div id="annotation{{i}}" style="width:50%;float:left;display:none" class="col">
         <form method="POST" action="/create-annotation/{{title}}/{{i}}">
           <input type="text" id="text" name="text" placeholder="What do you think?">
           <button type="submit">Post</button>
@@ -38,7 +42,9 @@
           </div>
         {% endfor %}
       </div>
+    </div>
     {% endfor %}
+  </div>
     <!-- {% for line in poem %}
       {% if line == '' %}
         <br>
