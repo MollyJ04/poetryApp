@@ -3,7 +3,9 @@
 {% block body %}
 
 	{% for author in authors %}
+	<div class="card border-dark" style="width:50%">
 		<a href="{{url_for('authorPoems',author=author)}}">{{author}}</a><br>
+	</div><br>
 	{% endfor %}
 
 {% endblock %}

@@ -129,7 +129,7 @@ def authorPoems(author):
 	poems = []
 	for i in response:
 		poems.append(i["title"])
-	return render_template("authorPoems.html",poems=poems)
+	return render_template("authorPoems.html",poems=poems,author=author)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -207,10 +207,14 @@ def delete_annotation(title,annotation_id):
 
 @app.route("/search")
 def search():
+	# add that is nothing comes up it doesn't get included
 	term = request.form.get('text')
-	# need to put the sql query and then printing all the results of that
-	pass
-
+	results = []
+	poemResults = requests.get(f"https://poetrydb.org/title/{term}")
+	poemResults = poemResults.json()
+	authorResults = requests.get(f"https://poetrydb.org/author/{term}")
+	authorResults = authorResults.json()
+	return render_template("search.html",poemResults=poemResults,authorResults=authorResults)
 
 if __name__ == '__main__':
     app.run(debug=True)
