@@ -70,6 +70,10 @@ class LoginForm(FlaskForm):
 		min=4, max=20)], render_kw={"placeholder": "Password"})
 	submit = SubmitField("Login")
 
+class SearchForm(FlaskForm):
+	searched = StringField("Searched")
+	submit = SubmitField("Submit")
+
 # db = sqlite3.connect(poetryApp.db)
 
 nav.Bar('top', [
@@ -205,16 +209,16 @@ def delete_annotation(title,annotation_id):
 	db.session.commit()
 	return redirect(url_for('read',title=title))
 
-@app.route("/search")
+@app.route("/search", methods=['GET','POST'])
 def search():
-	# add that is nothing comes up it doesn't get included
-	term = request.form.get('text')
-	results = []
-	poemResults = requests.get(f"https://poetrydb.org/title/{term}")
+	form = SearchForm()
+	if form.validate_on_submit():
+		searchTerm = form.searched.data
+	poemResults = requests.get(f"https://poetrydb.org/title/{searchTerm}")
 	poemResults = poemResults.json()
-	authorResults = requests.get(f"https://poetrydb.org/author/{term}")
+	authorResults = requests.get(f"https://poetrydb.org/author/{searchTerm}")
 	authorResults = authorResults.json()
-	return render_template("search.html",poemResults=poemResults,authorResults=authorResults)
+	return render_template("search.html",poemResults=poemResults,authorResults=authorResults,term=searchTerm)
 
 if __name__ == '__main__':
     app.run(debug=True)
