@@ -29,16 +29,14 @@
           <div>
             {% if annotation.line==i %}
               <strong>{{annotation.user.username}}:</strong>
-              {{annotation.text}}<br>
+              {{annotation.text}}
+                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                <ul class="dropdown-menu">
+                <li>
+                  <a href="/delete-annotation/{{title}}/{{annotation.id}}" class="dropdown-item">Delete</a>
+                </li>
+                </ul>
             {% endif %}
-          </div>
-          <div>
-            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
-            <ul class="dropdown-menu">
-            <li>
-              <a href="/delete-annotation/{{title}}/{{annotation.id}}" class="dropdown-item">Delete</a>
-            </li>
-            </ul>
           </div>
         {% endfor %}
       </div>

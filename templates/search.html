@@ -1,8 +1,28 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    {{term}}
-    {{poemResults}}
-    {{authorResults}}
+    <h2>Displaying results for <strong>{{term}}</strong></h2><br>
+    <h2>Poems</h2>
+    {% if poems[0]=="none" %}
+        <h3>No results found</h3>
+    {% else %}
+        {% for poem in poems %}
+            <div class="card border-dark">
+                <h3><a href="{{url_for('read',title=poem)}}">{{poem}}</a></h3><br>
+                <!-- <p>by <a href="">testing</a></p> -->
+            </div><br>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Authors</h2>
+    {% if authors[0]=="none" %}
+        <h3>No results found</h3>
+    {% else %}
+        {% for author in authors %}
+        <div class="card border-dark" style="width:50%">
+            <h3><a href="{{url_for('authorPoems',author=author)}}">{{author}}</a></h3><br>
+        </div><br>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

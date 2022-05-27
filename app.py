@@ -70,9 +70,9 @@ class LoginForm(FlaskForm):
 		min=4, max=20)], render_kw={"placeholder": "Password"})
 	submit = SubmitField("Login")
 
-class SearchForm(FlaskForm):
-	searched = StringField("Searched")
-	submit = SubmitField("Submit")
+# class SearchForm(FlaskForm):
+# 	searched = StringField("Searched")
+# 	submit = SubmitField("Submit")
 
 # db = sqlite3.connect(poetryApp.db)
 
@@ -186,9 +186,12 @@ def create_comment(title):
 @login_required
 def create_annotation(title,line):
 	text = request.form.get('text')
-	annotation = Annotation(text=text,author=current_user.id,poem=title,line=line)
-	db.session.add(annotation)
-	db.session.commit()
+	print(text,flush=True)
+	print(len(text),flush=True)
+	if len(text.strip()) != 0:
+		annotation = Annotation(text=text,author=current_user.id,poem=title,line=line)
+		db.session.add(annotation)
+		db.session.commit()
 	return redirect(url_for('read',title=title))
 
 @app.route("/delete-comment/<title>/<comment_id>")
@@ -211,14 +214,29 @@ def delete_annotation(title,annotation_id):
 
 @app.route("/search", methods=['GET','POST'])
 def search():
-	form = SearchForm()
-	if form.validate_on_submit():
-		searchTerm = form.searched.data
+	# form = SearchForm()
+	# if form.validate_on_submit():
+	# 	searchTerm = form.searched.data
+	searchTerm = request.form.get('search')
 	poemResults = requests.get(f"https://poetrydb.org/title/{searchTerm}")
 	poemResults = poemResults.json()
+	poems = []
+	if type(poemResults) is dict:
+		poems.append("none")
+	elif type(poemResults) is list:
+		for i in poemResults:
+			poems.append(i["title"])
+
 	authorResults = requests.get(f"https://poetrydb.org/author/{searchTerm}")
 	authorResults = authorResults.json()
-	return render_template("search.html",poemResults=poemResults,authorResults=authorResults,term=searchTerm)
+	authors = []
+	if type(authorResults) is dict:
+		authors.append("none")
+	elif type(authorResults) is list:
+		for i in authorResults:
+			if i["author"] not in authors:
+				authors.append(i["author"])
+	return render_template("search.html",poemResults=poemResults,authorResults=authorResults,term=searchTerm,poems=poems,authors=authors)
 
 if __name__ == '__main__':
     app.run(debug=True)
