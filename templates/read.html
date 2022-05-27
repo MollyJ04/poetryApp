@@ -15,9 +15,15 @@
       {% if poem[i] == '' %}
       <div class="col"><br></div>
       {% else %}
-      <div class="col">
-        <p id="line{{i}}" style="width:100%;float:left" onclick="showHideAnnotation('{{i}}')">{{ poem[i] }}</p>
-      </div>
+        {% if isAnnotated[i] == true %}
+        <div class="col">
+          <p id="line{{i}}" style="float:left;background-color:lightgray" onclick="showHideAnnotation('{{i}}')">{{ poem[i] }}</p>
+        </div>
+        {% else %}
+        <div class="col">
+          <p id="line{{i}}" style="float:left" onclick="showHideAnnotation('{{i}}')">{{ poem[i] }}</p>
+        </div>
+        {% endif %}
       {% endif %}
       <!-- <button onclick="showHideAnnotation('{{i}}')">></button> -->
       <div id="annotation{{i}}" style="width:50%;float:left;display:none" class="col">
