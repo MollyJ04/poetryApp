@@ -124,9 +124,9 @@ def read(title):
 	author = response[0]["author"]
 	comments = Comment.query.filter_by(poem=title)
 	annotations = Annotation.query.filter_by(poem=title)
-	isAnnotated = {}
+	isAnnotated = []
 	for i in range(len(poem)):
-		isAnnotated[i] = False
+		isAnnotated.append(False)
 	for i in annotations:
 		isAnnotated[i.line]=True
 	print(isAnnotated,flush=True)

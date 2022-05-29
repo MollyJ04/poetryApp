@@ -94,7 +94,7 @@
         {% block body %}{% endblock %}
     </body>
     <script type="text/javascript">
-        function showHideAnnotation(num) {
+        function showHideAnnotation(num,isAnnotated) {
             var annotation = document.getElementById("annotation"+num);
             var line = document.getElementById("line"+num)
             if(annotation.style.display == null || annotation.style.display == "none") {
@@ -102,7 +102,11 @@
                 line.style.backgroundColor = "pink";
             } else {
                 annotation.style.display = "none";
-                line.style.backgroundColor = "white";
+                if(isAnnotated=="True"){
+                    line.style.backgroundColor = "lightgray";
+                } else{
+                    line.style.backgroundColor = "white";
+                }
             }
         }
     </script>
