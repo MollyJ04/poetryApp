@@ -7,7 +7,7 @@
         <h3>No results found</h3>
     {% else %}
         {% for poem in poems %}
-            <div class="card border-dark">
+            <div class="card border-secondary mb-3" style="width:50%">
                 <h3><a href="{{url_for('read',title=poem)}}">{{poem}}</a></h3><br>
                 <!-- <p>by <a href="">testing</a></p> -->
             </div><br>
@@ -19,7 +19,7 @@
         <h3>No results found</h3>
     {% else %}
         {% for author in authors %}
-        <div class="card border-dark" style="width:50%">
+        <div class="card border-secondary mb-3" style="width:50%">
             <h3><a href="{{url_for('authorPoems',author=author)}}">{{author}}</a></h3><br>
         </div><br>
         {% endfor %}

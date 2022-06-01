@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
+<br>
 	{% for poem in poems %}
-		<div class="card border-dark">
+		<div class="card border-secondary mb-3" style="width:50%">
 			<h3><a href="{{url_for('read',title=poem)}}">{{poem}}</a></h3><br>
 			<!-- <p>by <a href="">testing</a></p> -->
 		</div><br>

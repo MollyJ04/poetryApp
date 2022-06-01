@@ -29,19 +29,21 @@
       <div id="annotation{{i}}" style="width:50%;float:left;display:none" class="col">
         <form method="POST" action="/create-annotation/{{title}}/{{i}}">
           <input type="text" id="text" name="text" placeholder="What do you think?">
-          <button type="submit">Post</button>
+          <button type="submit" class="btn btn-secondary">Post</button>
         </form>
         {% for annotation in annotations %}
           <div>
             {% if annotation.line==i %}
               <strong>{{annotation.user.username}}:</strong>
               {{annotation.text}}
+              {% if current_user.id==annotation.author %}
                 <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                 <ul class="dropdown-menu">
                 <li>
                   <a href="/delete-annotation/{{title}}/{{annotation.id}}" class="dropdown-item">Delete</a>
                 </li>
                 </ul>
+                {% endif %}
             {% endif %}
           </div>
         {% endfor %}
@@ -68,23 +70,23 @@
     <h2>Comments</h2>
     <form method="POST" action="/create-comment/{{title}}">
       <input type="text" id="text" name="text" placeholder="Comment!">
-      <button type="submit">Comment</button>
+      <button type="submit" class="btn btn-secondary">Comment</button>
     </form>
     {% for comment in comments %}
       <div>
         <strong>{{comment.user.username}}:</strong>
         {{ comment.text }}
-      </div>
       {% if current_user.id==comment.author %}
-      <div class="btn-button">
+      <!-- <div class="btn-button"> -->
         <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
         <ul class="dropdown-menu">
           <li>
             <a href="/delete-comment/{{title}}/{{comment.id}}" class="dropdown-item">Delete</a>
           </li>
         </ul>
-      </div>
       {% endif %}
+      </div>
+    <!-- </div> -->
       <!-- {{ comment.date_created }}<br> -->
     {% endfor %}
 {% endblock %}

@@ -129,7 +129,6 @@ def read(title):
 		isAnnotated.append(False)
 	for i in annotations:
 		isAnnotated[i.line]=True
-	print(isAnnotated,flush=True)
 	return render_template("read.html",title=title,poem=poem,author=author,comments=comments,length=len(poem),annotations=annotations,isAnnotated=isAnnotated)
 
 @app.route("/authorPoems/<author>")
