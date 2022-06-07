@@ -221,6 +221,8 @@ def search():
 	# if form.validate_on_submit():
 	# 	searchTerm = form.searched.data
 	searchTerm = request.form.get('search')
+	if searchTerm=="":
+		searchTerm=" "
 	poemResults = requests.get(f"https://poetrydb.org/title/{searchTerm}")
 	poemResults = poemResults.json()
 	poems = []
